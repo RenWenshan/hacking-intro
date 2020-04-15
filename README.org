@@ -1,0 +1,216 @@
+#+TITLE: 编程入门课
+#+AUTHOR: 肉山
+
+* 内篇
+** emacs 基础, lisp 基础, 第一个程序
+*** emacs 基础
+**** 基础操作
+**** org-mode
+**** 配置文件
+
+*** lisp 基础
+    - =C-x C-e=, =M-:=,
+    - =+=, =-=, =*=, =/=, =%=
+    - =concat=, =substring=, =number-to-string=, =string-to-number=, =message=
+
+*** 第一个程序
+    在 =~/.emacs= 的最后加入:
+    #+BEGIN_SRC emacs-lisp
+      (message "Hello <YourName>")
+    #+END_SRC
+
+*** 练习: 过一遍 emacs tutorial
+    - 安装 emacs，下载 roushan-emacs，并解压缩到家目录 (home directory)，运行 emacs
+    - 点右上角的 Help \to Emacs Tutorial (choose language) \to 输入 Chinese-GB 然后回车
+    - 跟着这个教程练习一遍，把快捷键记到一张纸上，方便以后查询
+
+*** 练习: 用 org-mode 记笔记
+    创建一个文件 notes.org，加入以下内容：
+    #+BEGIN_SRC org
+      ,* 第一章
+
+      ,** emacs 教程
+
+      ,** org-mode 的使用
+
+      ,** hello world
+
+      ,** 练习
+    #+END_SRC
+
+    然后在各个标题下加入一些内容，并试着在有 =*= 的标题行按 tab 键收起、打开相应的章节
+
+*** 练习: lisp 编程
+    - 在配置文件 =~/.emacs= 的末尾，写一段源码，使得每次打开 emacs 的时候，都会在 =mini-buffer= 里看到：你好，XXX，现在是YYYY年-MM月-DD日 HH时:mm分
+    - 例如: 你好，肉山，现在是2020年-04月-14日 19时:49分
+    - 提示：
+      + concat 可以把两个或多个字符串连在一起，比如 =(concat "hello" " world")= \to "hello world"
+      + format-time-string 可以按照指定格式返回当前时间的字符串，例如 =(format-time-string "%Y/%m/%d")= \to "2020/04/14"
+        - =%Y= 年
+        - =%m= 月
+        - =%d= 日
+        - =%H= 时
+        - =%M= 分
+
+** 变量，判断，与或非，循环，list
+*** setq
+*** if
+*** and, or, not
+*** while
+*** car, cdr, cons, length, nthcdr, nth, setcar, setcdr
+*** 练习: 3 和 5 整除
+    写一段源码，从 1 到 108：
+    - 如果能被 3 整除，也能被 5 整除，则输出 "X"
+    - 如果能被 3 整除，但不能被 5 整除，则输出 "Y"
+    - 如果不能被 3 整除，但能被 5 整除，则输出 "Z"
+    - 如果不能被 3 整除，也不能被 5 整除，则输出 "~"
+
+*** 练习: car, cdr, cons
+    - 给定一个 list: ='(12 9 17 45 100 108 21 75)=
+    - 用 while 筛选出『能被 3 整除，也能被 5 整除』的数
+
+** 函数
+*** 帮助
+    - =C-h f= \to 查看函数说明
+    - =C-h v= \to 查看变量说明
+    - =C-h k= \to 查看快捷键对应的函数
+    - =C-h a= \to 搜索函数
+
+*** lambda, let, defun, arguments, recursion
+    - =M-x edebug-defun= \to 调试 \to =C-x C-e= \to 取消调试
+    - lambda
+
+*** graph
+    #+BEGIN_SRC emacs-lisp
+      (defun column-of-graph (max-graph-height actual-height)
+        "Return list of strings that is one column of a graph."
+        (let ((insert-list nil)
+              (number-of-top-blanks
+               (- max-graph-height actual-height)))
+
+          ;; Fill in asterisks.
+          (while (> actual-height 0)
+            (setq insert-list (cons "*" insert-list))
+            (setq actual-height (1- actual-height))) ; ("*" "*")
+
+          ;; Fill in blanks.
+          (while (> number-of-top-blanks 0)   ; (" " ... "*" "*")
+            (setq insert-list (cons " " insert-list))
+            (setq number-of-top-blanks
+                  (1- number-of-top-blanks)))
+
+          ;; Return whole list.
+          insert-list))
+
+      (defun my-graph (数字表)
+        (let ((最大高度 (apply 'max 数字表)))
+          (dolist (列的值 数字表)
+            (save-excursion
+              (insert-rectangle (column-of-graph 最大高度 列的值)))
+            (forward-char)
+            )))
+    #+END_SRC
+
+    运行 =(my-graph '(1 2 3 4 6 4 3 5 7 6 5 2 3))= 会输出：
+    #+BEGIN_SRC fundamental
+              ,*
+          ,*   **
+          ,*  ****
+         ,*** ****
+        ,********* *
+       ,************
+      ,*************
+    #+END_SRC
+
+*** 练习: Factorial
+    写一个计算 n 的阶乘的函数:
+    #+BEGIN_SRC emacs-lisp
+      (defun my-factorial (n)
+        "计算 n 的阶乘"
+        (...))
+    #+END_SRC
+
+*** 练习: Fionacci
+    写一个计算 Fionacci 第 n 个数的函数：
+    #+BEGIN_SRC emacs-lisp
+      (defun my-fibonacci (n)
+        "返回 fibonacci 数列中的第 n 个数"
+        (...))
+    #+END_SRC
+
+*** 练习: 横向的 graph
+    - 参考 my-graph，实现一个横向输出的函数 my-graph-2， =(my-graph-2 '(1 2 3 4 6 4 3 5 7 6 5 2 3))= 输出：
+      #+BEGIN_SRC fundamental
+              ,*
+             ,**
+            ,***
+           ,****
+         ,******
+           ,****
+            ,***
+          ,*****
+        ,*******
+         ,******
+          ,*****
+             ,**
+            ,***
+      #+END_SRC
+
+** 高阶函数
+*** 把函数做为参数传递, apply, funcall
+    练习: 写一个函数（不是 M-x 命令），接收三个参数： x y f，其中 x y 是数字， f 是字符串，且 f 是可选的。
+    - 如果 f 是 ="+"= (如何判断字符串的相等？ \to =string-equal=), 则返回 =(+ x y)=
+    - 如果 f 是 ="-"=, 则返回 =(- x y)=
+    - 如果 f 是 ="*"=, 则返回 =(* x y)=
+    - 如果 f 是 ="/"=, 则进行进一步判断，如果 =(= y 0)=，则返回 ="wrong divisor"=, 否则返回 =(/ x y)=
+    - 默认返回: =(+ x y)=
+
+    可以直接传函数本身吗？ \to funcall
+
+    如果参数是在一个 list 中呢？ 比如 max \to apply
+
+    高阶函数：mapcar, reduce
+
+*** 练习: mapcar
+    - 给定一个 list: ='(1 2 3 7 9)=
+    - 用 mapcar 计算这个 list 里每个数字的平方 (应该得到结果 ='(1 4 9 49 81)=)
+
+*** 练习: reduce
+    - 给定一个 list: ='(12 9 17 45 100 108 21 75)=
+    - 用 reduce 在这个 list 中筛选出『能被 3 整除，也能被 5 整除』的数
+
+** 游戏 2048
+*** 安装 2048 游戏
+    在 =~/.emacs= 加入以下代码：
+    #+BEGIN_SRC emacs-lisp
+      (require 'package)
+      (add-to-list
+       'package-archives
+       '("melpa" . "http://melpa.milkbox.net/packages/")
+       t)
+    #+END_SRC
+
+    选中，然后 =M-x eval-region=
+
+    然后 =M-x package-refresh-contents= \to =M-x package-install RET 2048=
+
+*** 试玩
+    =M-x 2048-game=
+
+*** 读源码
+    - =C-h f 2048-game=
+    - 点第一行的 =2048-game.el= 链接，进入其函数定义
+
+** macro
+*** defmacro
+*** 实现 cond
+*** 实现 dotimes
+*** 练习: 实现 dolist
+*** 练习: 实现 filter
+
+** eval: lisp 的核心
+
+* 外篇
+  - 工具：shell 命令行、git 源码版本控制
+  - 网页编程：HTML/CSS/JavaScript
+  - 爬虫编程：Python
