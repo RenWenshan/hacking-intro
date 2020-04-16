@@ -19,12 +19,12 @@
       (message "Hello <YourName>")
     #+END_SRC
 
-*** 练习: 过一遍 emacs tutorial
+*** hack: 过一遍 emacs tutorial
     - 安装 emacs，下载 roushan-emacs，并解压缩到家目录 (home directory)，运行 emacs
     - 点右上角的 Help \to Emacs Tutorial (choose language) \to 输入 Chinese-GB 然后回车
-    - 跟着这个教程练习一遍，把快捷键记到一张纸上，方便以后查询
+    - 跟着这个教程hack一遍，把快捷键记到一张纸上，方便以后查询
 
-*** 练习: 用 org-mode 记笔记
+*** hack: 用 org-mode 记笔记
     创建一个文件 notes.org，加入以下内容：
     #+BEGIN_SRC org
       ,* 第一章
@@ -35,12 +35,12 @@
 
       ,** hello world
 
-      ,** 练习
+      ,** hack
     #+END_SRC
 
     然后在各个标题下加入一些内容，并试着在有 =*= 的标题行按 tab 键收起、打开相应的章节
 
-*** 练习: lisp 编程
+*** hack: lisp 编程
     - 在配置文件 =~/.emacs= 的末尾，写一段源码，使得每次打开 emacs 的时候，都会在 =mini-buffer= 里看到：你好，XXX，现在是YYYY年-MM月-DD日 HH时:mm分
     - 例如: 你好，肉山，现在是2020年-04月-14日 19时:49分
     - 提示：
@@ -58,14 +58,14 @@
 *** and, or, not
 *** while
 *** car, cdr, cons, length, nthcdr, nth, setcar, setcdr
-*** 练习: 3 和 5 整除
+*** hack: 3 和 5 整除
     写一段源码，从 1 到 108：
     - 如果能被 3 整除，也能被 5 整除，则输出 "X"
     - 如果能被 3 整除，但不能被 5 整除，则输出 "Y"
     - 如果不能被 3 整除，但能被 5 整除，则输出 "Z"
     - 如果不能被 3 整除，也不能被 5 整除，则输出 "~"
 
-*** 练习: car, cdr, cons
+*** hack: car, cdr, cons
     - 给定一个 list: ='(12 9 17 45 100 108 21 75)=
     - 用 while 筛选出『能被 3 整除，也能被 5 整除』的数
 
@@ -122,7 +122,7 @@
       ,*************
     #+END_SRC
 
-*** 练习: Factorial
+*** hack: Factorial
     写一个计算 n 的阶乘的函数:
     #+BEGIN_SRC emacs-lisp
       (defun my-factorial (n)
@@ -130,7 +130,7 @@
         (...))
     #+END_SRC
 
-*** 练习: Fionacci
+*** hack: Fionacci
     写一个计算 Fionacci 第 n 个数的函数：
     #+BEGIN_SRC emacs-lisp
       (defun my-fibonacci (n)
@@ -138,7 +138,7 @@
         (...))
     #+END_SRC
 
-*** 练习: 横向的 graph
+*** hack: 横向的 graph
     - 参考 my-graph，实现一个横向输出的函数 my-graph-2， =(my-graph-2 '(1 2 3 4 6 4 3 5 7 6 5 2 3))= 输出：
       #+BEGIN_SRC fundamental
               ,*
@@ -158,7 +158,7 @@
 
 ** 高阶函数
 *** 把函数做为参数传递, apply, funcall
-    练习: 写一个函数（不是 M-x 命令），接收三个参数： x y f，其中 x y 是数字， f 是字符串，且 f 是可选的。
+    hack: 写一个函数（不是 M-x 命令），接收三个参数： x y f，其中 x y 是数字， f 是字符串，且 f 是可选的。
     - 如果 f 是 ="+"= (如何判断字符串的相等？ \to =string-equal=), 则返回 =(+ x y)=
     - 如果 f 是 ="-"=, 则返回 =(- x y)=
     - 如果 f 是 ="*"=, 则返回 =(* x y)=
@@ -171,42 +171,48 @@
 
     高阶函数：mapcar, reduce
 
-*** 练习: mapcar
+*** hack: mapcar
     - 给定一个 list: ='(1 2 3 7 9)=
     - 用 mapcar 计算这个 list 里每个数字的平方 (应该得到结果 ='(1 4 9 49 81)=)
 
-*** 练习: reduce
+*** hack: reduce
     - 给定一个 list: ='(12 9 17 45 100 108 21 75)=
     - 用 reduce 在这个 list 中筛选出『能被 3 整除，也能被 5 整除』的数
 
-** 游戏 2048
-*** 安装 2048 游戏
-    在 =~/.emacs= 加入以下代码：
-    #+BEGIN_SRC emacs-lisp
-      (require 'package)
-      (add-to-list
-       'package-archives
-       '("melpa" . "http://melpa.milkbox.net/packages/")
-       t)
-    #+END_SRC
-
-    选中，然后 =M-x eval-region=
-
-    然后 =M-x package-refresh-contents= \to =M-x package-install RET 2048=
-
-*** 试玩
-    =M-x 2048-game=
+** 实例：speed-type
+*** 试用
+    =M-x speed-type-text=
 
 *** 读源码
-    - =C-h f 2048-game=
-    - 点第一行的 =2048-game.el= 链接，进入其函数定义
+    - =C-h f speed-type-text=
+    - 点第一行的 =speed-type.el= 链接，进入其函数定义
+    - =M-x edebug-defun= 开启调试 \to =C-x C-e= 取消调试
+
+*** 改源码：自己指定练习用的文本
+*** hack: =speed-type--retrieve=
+    读 =speed-type--retrieve= 这个函数的源码，这个函数有一个变量是多余的，找出来并删掉它。
+
+    提示：
+    - 可以把这个函数的源码拷贝到你自己的 elisp buffer 中 (比如 =*scratch*=)，然后进行修改，最后 =C-x C-e= 重新定义它
+
+*** hack: =speed-type--pick-text-to-type=
+    读 =speed-type--pick-text-to-type= 这个函数的源码并写下来每一个表达式在做什么，可以先把提示里的内容分别试验一遍，再开始阅读。
+
+    提示：
+    - =unless= 是『除非』的意思
+    - =save-mark-and-excursion= 不用管
+    - =(forward-paragraph X)= 移动 X 个自然段
+    - =(mark-paragraph)= 选中一个自然段
+    - =(mark)= 返回当前选中的区域的末尾位置
+    - =(exchange-point-and-mark)= 交换 mark 和 point 的位置
+    - =(re-search-backward REGEXP BOUND t)= 反向进行正则表达式搜索（但最多搜索到 BOUND 所在位置就结束）， =(sentence-end)= 会返回匹配句子结束的正则表达式
 
 ** macro
 *** defmacro
 *** 实现 cond
 *** 实现 dotimes
-*** 练习: 实现 dolist
-*** 练习: 实现 filter
+*** hack: 实现 dolist
+*** hack: 实现 filter
 
 ** eval: lisp 的核心
 
