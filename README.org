@@ -20,7 +20,9 @@
     #+END_SRC
 
 *** hack: 过一遍 emacs tutorial
-    - 安装 emacs，下载 roushan-emacs，并解压缩到家目录 (home directory)，运行 emacs
+    - 安装 emacs，下载 =hacking-intro=, 并解压缩到家目录 (home directory)
+    - 在家目录下创建一个新的文件 =.emacs=, 内容是 =(load-file "~/hacking-intro/init.el")=
+    - 启动 emacs
     - 点右上角的 Help \to Emacs Tutorial (choose language) \to 输入 Chinese-GB 然后回车
     - 跟着这个教程hack一遍，把快捷键记到一张纸上，方便以后查询
 
