@@ -54,7 +54,7 @@
 
 ** 变量，判断，与或非，循环，list
 *** setq
-*** if
+*** cond, if, unless
 *** and, or, not
 *** while
 *** car, cdr, cons, length, nthcdr, nth, setcar, setcdr
@@ -189,6 +189,7 @@
     - =M-x edebug-defun= 开启调试 \to =C-x C-e= 取消调试
 
 *** 改源码：自己指定练习用的文本
+
 *** hack: =speed-type--retrieve=
     读 =speed-type--retrieve= 这个函数的源码，这个函数有一个变量是多余的，找出来并删掉它。
 
@@ -209,10 +210,31 @@
 
 ** macro
 *** defmacro
-*** 实现 cond
+*** 实现 unless
 *** 实现 dotimes
 *** hack: 实现 dolist
+    基于 while 实现一个简化版的 dolist， dolist 的用法是 =(dolist (VAR LIST) BODY...)=, 例如：
+    #+BEGIN_SRC emacs-lisp
+      (dolist (element '(3 1 4 5 2))
+        (message "%d" element))
+
+      ;; 会在把以下内容打印到 *Messages*:
+      ;; 3
+      ;; 1
+      ;; 4
+      ;; 5
+      ;; 2
+      ;; nil
+    #+END_SRC
+
 *** hack: 实现 filter
+    基于 reduce 实现 filter， =(filter FUNC LIST)= 会从 =LIST= 中的所有元素一一当作参数传给 =FUNC= 函数，最终返回一个包含所有运行结果为 t 的元素的 list，例如：
+    #+BEGIN_SRC emacs-lisp
+      (filter (lambda (x) (= (% x 2) 0))
+              '(3 1 4 5 2))
+
+      ;; 上面的表达式应该返回 (4 2)
+    #+END_SRC
 
 ** eval: lisp 的核心
 
