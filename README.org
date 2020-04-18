@@ -181,35 +181,6 @@
     - 给定一个 list: ='(12 9 17 45 100 108 21 75)=
     - 用 reduce 在这个 list 中筛选出『能被 3 整除，也能被 5 整除』的数
 
-** 实例：speed-type
-*** 试用
-    =M-x speed-type-text=
-
-*** 读源码
-    - =C-h f speed-type-text=
-    - 点第一行的 =speed-type.el= 链接，进入其函数定义
-    - =M-x edebug-defun= 开启调试 \to =C-x C-e= 取消调试
-
-*** 改源码：自己指定练习用的文本
-
-*** hack: =speed-type--retrieve=
-    读 =speed-type--retrieve= 这个函数的源码，这个函数有一个变量是多余的，找出来并删掉它。
-
-    提示：
-    - 可以把这个函数的源码拷贝到你自己的 elisp buffer 中 (比如 =*scratch*=)，然后进行修改，最后 =C-x C-e= 重新定义它
-
-*** hack: =speed-type--pick-text-to-type=
-    读 =speed-type--pick-text-to-type= 这个函数的源码并写下来每一个表达式在做什么，可以先把提示里的内容分别试验一遍，再开始阅读。
-
-    提示：
-    - =unless= 是『除非』的意思
-    - =save-mark-and-excursion= 不用管
-    - =(forward-paragraph X)= 移动 X 个自然段
-    - =(mark-paragraph)= 选中一个自然段
-    - =(mark)= 返回当前选中的区域的末尾位置
-    - =(exchange-point-and-mark)= 交换 mark 和 point 的位置
-    - =(re-search-backward REGEXP BOUND t)= 反向进行正则表达式搜索（但最多搜索到 BOUND 所在位置就结束）， =(sentence-end)= 会返回匹配句子结束的正则表达式
-
 ** macro
 *** defmacro
 *** 实现 unless
@@ -238,9 +209,48 @@
       ;; 上面的表达式应该返回 (4 2)
     #+END_SRC
 
+** hash table
+*** list 的内部实现
+*** hash table
 ** eval: lisp 的核心
 
 * 外篇
-  - 工具：shell 命令行、git 源码版本控制
-  - 网页编程：HTML/CSS/JavaScript
-  - 爬虫编程：Python
+** 工具1: shell 命令行
+
+** 工具2： git 源码版本控制
+
+** elisp 实例：speed-type
+*** 试用
+    =M-x speed-type-text=
+
+*** 读源码
+    - =C-h f speed-type-text=
+    - 点第一行的 =speed-type.el= 链接，进入其函数定义
+    - =M-x edebug-defun= 开启调试 \to =C-x C-e= 取消调试
+
+*** 改源码：自己指定练习用的文本
+*** hack: =speed-type--retrieve=
+    读 =speed-type--retrieve= 这个函数的源码，这个函数有一个变量是多余的，找出来并删掉它。
+
+    提示：
+    - 可以把这个函数的源码拷贝到你自己的 elisp buffer 中 (比如 =*scratch*=)，然后进行修改，最后 =C-x C-e= 重新定义它
+
+*** hack: =speed-type--pick-text-to-type=
+    读 =speed-type--pick-text-to-type= 这个函数的源码并写下来每一个表达式在做什么，可以先把提示里的内容分别试验一遍，再开始阅读。
+
+    提示：
+    - =unless= 是『除非』的意思
+    - =save-mark-and-excursion= 不用管
+    - =(forward-paragraph X)= 移动 X 个自然段
+    - =(mark-paragraph)= 选中一个自然段
+    - =(mark)= 返回当前选中的区域的末尾位置
+    - =(exchange-point-and-mark)= 交换 mark 和 point 的位置
+    - =(re-search-backward REGEXP BOUND t)= 反向进行正则表达式搜索（但最多搜索到 BOUND 所在位置就结束）， =(sentence-end)= 会返回匹配句子结束的正则表达式
+
+** 网页编程
+*** HTML
+*** CSS
+*** JavaScript
+
+** 爬虫编程：Python
+*** Python
