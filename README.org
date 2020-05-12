@@ -189,7 +189,8 @@
     基于 while 实现一个简化版的 dolist， dolist 的用法是 =(dolist (VAR LIST) BODY...)=, 例如：
     #+BEGIN_SRC emacs-lisp
       (dolist (element '(3 1 4 5 2))
-        (message "%d" element))
+        (setq a (1+ element)
+        (message "%d" a))))
 
       ;; 会在把以下内容打印到 *Messages*:
       ;; 3
@@ -215,10 +216,6 @@
 ** eval: lisp 的核心
 
 * 外篇
-** 工具1: shell 命令行
-
-** 工具2： git 源码版本控制
-
 ** elisp 实例：speed-type
 *** 试用
     =M-x speed-type-text=
@@ -247,10 +244,126 @@
     - =(exchange-point-and-mark)= 交换 mark 和 point 的位置
     - =(re-search-backward REGEXP BOUND t)= 反向进行正则表达式搜索（但最多搜索到 BOUND 所在位置就结束）， =(sentence-end)= 会返回匹配句子结束的正则表达式
 
-** 网页编程
-*** HTML
-*** CSS
-*** JavaScript
+** javascript
+*** Firefox Console, Tampermonkey, 第一个程序
+    - javascript 之于 Firefox，相当于 elisp 之于 Emacs，运行源码的地方：Tools \to Web Developer \to Web Console
+    - tampermonkey 可以在打开特定网站时运行自己的 javascript 源码
+    - 对应 [[emacs 基础, lisp 基础, 第一个程序]]
+    - hack：打开 https://emacs-china.org/ 时，弹出对话框，内容同 [[hack: lisp 编程]]
 
-** 爬虫编程：Python
-*** Python
+*** javascript 基础
+    - 对应 [[变量，判断，与或非，循环，list]]
+      #+BEGIN_SRC js
+        // switch 类似于 cond
+        let a = 1;
+
+        switch (a) {
+          case 1:
+            console.log("foo");
+            break;
+          case 2:
+            console.log("bar");
+            break;
+          default:
+            console.log("hello world");
+        }
+
+        // (cond ((= a 1) (print "foo"))
+        //       ((= a 2) (print "bar"))
+        //       (t (print "hello world"))))))
+
+
+        // if, === 相当于 lisp 中的 =
+        a = 1;
+        if (a === 1) {
+          console.log("1");
+        } else {
+          console.log("2");
+        }
+
+        // and &&
+        // or  ||
+        // not !
+
+        // while 循环
+        let counter = 0;
+        while (counter < 10) {
+          console.log("printing: " + counter);
+          counter = counter + 1;
+        }
+
+        // car 等
+        let myList = [3, 5, 6, 2, 4]
+        myList[0]                       // car
+        myList.slice(1)                 // cdr
+        myList.slice(1, 4)
+
+        // (setq myList '(3 5 6 2 4))
+        // (cons 999 myList)
+        myList.unshift(999)
+
+        myList.length                   // length
+        myList.slice(3)                 // (nthcdr 3 myList)
+        myList[3]                       // (nth 3 myList)
+
+        myList[0] = 1024                // (setcar myList 1024)
+        // setcdr 可能没有对应
+      #+END_SRC
+
+    - 对应 [[函数]]
+      #+BEGIN_SRC js
+        // lambda, defun
+
+        // (defun myF (x) (* x x))
+        let myF = function (x) {
+          return x**2;
+        };
+
+        // ((lambda (x) (* x x)) 7)
+        (function (x) {
+          return x**2;
+        })(7)
+
+        // &rest
+
+        // (defun sum (&rest args)
+        //   (apply '+ args))
+
+        function sum(...theArgs) {
+          return theArgs.reduce((previous, current) => {
+            return previous + current;
+          });
+        }
+
+        // (defun my-factorial (n)
+        //   (if (= n 0) 1
+        //     (* n (my-factorial (- n 1))))
+        //   )
+
+        let myFactorial = function (n) {
+          if (n === 0) {
+            return 1;
+          } else {
+            return n * myFactorial(n-1);
+          }
+        };
+      #+END_SRC
+
+    - 对应 [[hash table]]
+      #+BEGIN_SRC js
+        // make-hash-table
+        let myTable = {
+          "x": {
+            "x1": "new x",
+            "x2": "new new x"
+          },
+          "y": "foobar"
+        };
+
+        myTable["y"];
+      #+END_SRC
+    - hack: 复现 [[hack: 3 和 5 整除]]， [[hack: car, cdr, cons]], [[hack: Fionacci]], [[hack: 横向的 graph]]
+
+*** javascript 高阶函数
+    - 对应 [[高阶函数]]
+    - hack：复现 [[hack: mapcar]], [[hack: reduce]]
